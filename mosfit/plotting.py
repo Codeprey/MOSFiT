@@ -11,14 +11,14 @@ __all__ = [
     'bandrepf', 'bandcolorf', 'radiocolorf', 'xraycolorf', 'bandaliasf',
     'bandshortaliasf', 'bandwavef', 'bandmetaf', 'bandcodes',
     'bandwavelengths',
-    'bandgroupf'
+    'bandgroupf', 'bandoffsetf'
 ]
 
 bandreps = {
     'Ks': ['K_s'],
-    'UVM2': ['uvm2', 'UVM2', 'UVm2', 'Um2', 'um2'],
-    'UVW1': ['uvw1', 'UVW1', 'UVw1', 'Uw1', 'uw1'],
-    'UVW2': ['uvw2', 'UVW2', 'UVw2', 'Uw2', 'uw2'],
+    'UVM2': ['uvm2', 'UVM2', 'UVm2', 'Um2', 'um2','M2'],
+    'UVW1': ['uvw1', 'UVW1', 'UVw1', 'Uw1', 'uw1','W1'],
+    'UVW2': ['uvw2', 'UVW2', 'UVw2', 'Uw2', 'uw2','W2'],
 }
 
 # Some bands are uniquely tied to an instrument/telescope/system, add this
@@ -28,6 +28,7 @@ bandmeta = {
     'UVW1': {'telescope': 'Swift', 'instrument': 'UVOT'},
     'UVW2': {'telescope': 'Swift', 'instrument': 'UVOT'},
     'F110W': {'telescope': 'Hubble', 'instrument': 'WFC3'},
+    'F225W': {'telescope': 'HST', 'instrument': 'UVIS'},
     'F775W': {'telescope': 'Hubble', 'instrument': 'WFC3'},
     'F850LP': {'telescope': 'Hubble', 'instrument': 'WFC3'}
 }
@@ -70,11 +71,16 @@ bandcodes = [
     "y",
     "Z",
     "F110W",
+    "F225W",
     "F775W",
     "F850LP",
     "VM",
     "RM",
-    "Ks"
+    "Ks",
+    "NUV",
+    "FUV",
+    "BL",
+    "VL"
 ]
 
 bandaliases = OrderedDict([
@@ -91,7 +97,6 @@ bandshortaliases = OrderedDict([
     ("r_SDSS", "r'"),
     ("i_SDSS", "i'"),
     ("z_SDSS", "z'"),
-    ("G", "")
 ])
 
 bandwavelengths = {
@@ -117,14 +122,17 @@ bandwavelengths = {
     "K": 2190.,
     "UVM2": 260.,
     "UVW1": 224.6,
-    "UVW2": 192.8
+    "UVW2": 192.8,
+    "FUV": 152.8,
+    "NUV": 227.1 
 }
 
 bandgroups = {
     "SDSS": ["u'", "g'", "r'", "i'", "z'"],
     "UVOT": ["UVW2", "UVM2", "UVW1"],
-    "HST": ['F110W', 'F775W', 'F850LP'],
-    "Johnson": ['U', 'B', 'V', 'R', 'I', 'Y', 'J', 'H', 'K']
+    "HST": ['F110W', 'F225W', 'F775W', 'F850LP'],
+    "Johnson": ['U', 'B', 'V', 'R', 'I', 'Y', 'J', 'H', 'K'],
+    "GALEX": ['NUV', 'FUV']
 }
 
 radiocodes = [
@@ -144,7 +152,16 @@ bandcolors = (cubehelix.cubehelix1_16.hex_colors[2:13] +
 shuffle(bandcolors)
 bandcolors2 = cubehelix.perceptual_rainbow_16.hex_colors
 shuffle(bandcolors2)
+
+
+#bandcolors = cubehelix.perceptual_rainbow_16.hex_colors
+
+#bandcolors = (cubehelix.cubehelix3_16.hex_colors[4:13])
+
+#shuffle(bandcolors)
+
 bandcolors = bandcolors + bandcolors2
+
 bandcolordict = dict(list(zip(bandcodes, bandcolors)))
 
 radiocolors = wesanderson.Zissou_5.hex_colors
@@ -225,3 +242,61 @@ def bandmetaf(band, field):
         if field in bandmeta[band]:
             return bandmeta[band][field]
     return ''
+
+bandoffsets={
+    "u":1.4,
+    "g":-0.9,
+    "r":0,
+    "i":1.0,
+    "z":1.7,
+    "u'":1.4,
+    "g'":-0.9,
+    "r'":0,
+    "i'":1.0,
+    "z'":1.7,
+    "u_SDSS":1.4,
+    "g_SDSS":-0.9,
+    "r_SDSS":0,
+    "i_SDSS":1.0,
+    "z_SDSS":1.7,
+    "U":0.4,
+    "B":2.1,
+    "V":2.8,
+    "R":0,
+    "I":0,
+    "G":0,
+    "Y":0,
+    "J":0,
+    "H":0,
+    "K":0,
+    "C":0,
+    "CR":0,
+    "CV":0,
+    "UVM2":-2,
+    "UVW1":-3,
+    "UVW2":-1,
+    "pg":0,
+    "Mp":0,
+    "w":0,
+    "y":0,
+    "Z":0,
+    "F110W":0,
+    "F225W":-0.9,
+    "F775W":0,
+    "F850LP":0,
+    "VM":0,
+    "RM":0,
+    "Ks":0,
+    "NUV":-2.5,
+    "FUV":-1.5,
+    "BL":1.5,
+    "VL":1.2
+}
+
+def bandoffsetf(code):
+    """Set up offset for each band to keep lightcurves staggered"""
+    newcode = bandrepf(code)
+    if newcode in bandoffsets:
+        return bandoffsets[newcode]
+    return 0
+
