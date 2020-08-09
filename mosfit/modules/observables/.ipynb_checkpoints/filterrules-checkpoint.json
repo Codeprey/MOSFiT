@@ -2159,45 +2159,5 @@
 			}
 		}
 
-	},
-    {
-        "telescopes": [
-            "",
-            "WFST"
-        ],
-        "instruments": [
-            "",
-            "WFST"
-        ],
-        "bandsets": [
-            "",
-            "WFST"
-        ],
-        "filters": {
-            "u": {
-                "path":"/opt/anaconda3/lib/python3.7/site-packages/mosfit-1.1.8-py3.7.egg/mosfit/modules/observables/filters/WFST_WFST.u_AB.dat",
-                "offset": 0
-            },
-            "g": {
-                "path":"/opt/anaconda3/lib/python3.7/site-packages/mosfit-1.1.8-py3.7.egg/mosfit/modules/observables/filters/WFST_WFST.g_AB.dat",
-                "offset": 0
-            },
-            "r": {
-                "path":"/opt/anaconda3/lib/python3.7/site-packages/mosfit-1.1.8-py3.7.egg/mosfit/modules/observables/filters/WFST_WFST.r_AB.dat",
-                "offset": 0
-            },
-            "i": {
-                "path":"/opt/anaconda3/lib/python3.7/site-packages/mosfit-1.1.8-py3.7.egg/mosfit/modules/observables/filters/WFST_WFST.i_AB.dat",
-                "offset": 0
-            },
-            "z": {
-                "path":"/opt/anaconda3/lib/python3.7/site-packages/mosfit-1.1.8-py3.7.egg/mosfit/modules/observables/filters/WFST_WFST.z_AB.dat",
-                "offset": 0
-            },
-            "w": {
-                "path":"/opt/anaconda3/lib/python3.7/site-packages/mosfit-1.1.8-py3.7.egg/mosfit/modules/observables/filters/WFST_WFST.w_AB.dat",
-                "offset": 0
-            }
-        }
-    }
+	}
 ]
